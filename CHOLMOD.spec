@@ -67,7 +67,7 @@ Statyczna biblioteka cholmod.
 	CFLAGS="%{rpmcflags} -fPIC -DNPARTITION" \
 	METIS= \
 %endif
-	LDFLAGS=%{rpmldflags} \
+	LDFLAGS="%{rpmldflags}" \
 	libdir=%{_libdir}
 
 %install

@@ -1,0 +1,138 @@
+diff -ur CHOLMOD/Demo/Makefile CHOLMOD-uf/Demo/Makefile
+--- CHOLMOD/Demo/Makefile	2007-05-05 16:37:46.000000000 +0200
++++ CHOLMOD-uf/Demo/Makefile	2007-12-02 17:10:39.000000000 +0100
+@@ -7,7 +7,7 @@
+ 
+ default: all
+ 
+-include ../../UFconfig/UFconfig.mk
++include /usr/share/misc/UFconfig.mk
+ 
+ #-------------------------------------------------------------------------------
+ # With METIS, CCOLAMD, CAMD, and the Partition Module:
+@@ -64,7 +64,7 @@
+ # 	( cd ../../COLAMD ; $(MAKE) )
+ #-------------------------------------------------------------------------------
+ 
+-I = -I../Include -I../../UFconfig
++I = -I../Include
+ 
+ cholmod_demo: library cholmod_demo.c cholmod_demo.h
+ 	$(C) -o cholmod_demo $(I) cholmod_demo.c $(LIB2)
+diff -ur CHOLMOD/Doc/Makefile CHOLMOD-uf/Doc/Makefile
+--- CHOLMOD/Doc/Makefile	2007-05-03 23:32:54.000000000 +0200
++++ CHOLMOD-uf/Doc/Makefile	2007-12-02 17:10:52.000000000 +0100
+@@ -1,6 +1,6 @@
+ default: all
+ 
+-include ../../UFconfig/UFconfig.mk
++include /usr/share/misc/UFconfig.mk
+ 
+ all: UserGuide.pdf
+ 
+diff -ur CHOLMOD/Include/cholmod.h CHOLMOD-uf/Include/cholmod.h
+--- CHOLMOD/Include/cholmod.h	2006-12-13 14:31:07.000000000 +0100
++++ CHOLMOD-uf/Include/cholmod.h	2007-12-02 17:12:47.000000000 +0100
+@@ -84,7 +84,7 @@
+ #include "cholmod_io64.h"
+ 
+ /* define UF_long */
+-#include "UFconfig.h"
++#include <UFconfig.h>
+ 
+ #include "cholmod_config.h"
+ 
+diff -ur CHOLMOD/Include/cholmod_internal.h CHOLMOD-uf/Include/cholmod_internal.h
+--- CHOLMOD/Include/cholmod_internal.h	2007-09-28 20:31:04.000000000 +0200
++++ CHOLMOD-uf/Include/cholmod_internal.h	2007-12-02 17:13:05.000000000 +0100
+@@ -201,7 +201,7 @@
+  * It can also be redefined for other platforms, by modifying UFconfig.h.
+  */
+ 
+-#include "UFconfig.h"
++#include <UFconfig.h>
+ 
+ /* -------------------------------------------------------------------------- */
+ /* Size_max: the largest value of size_t */
+diff -ur CHOLMOD/Lib/Makefile CHOLMOD-uf/Lib/Makefile
+--- CHOLMOD/Lib/Makefile	2007-05-05 16:36:56.000000000 +0200
++++ CHOLMOD-uf/Lib/Makefile	2007-12-02 17:11:09.000000000 +0100
+@@ -6,7 +6,7 @@
+ 
+ ccode: all
+ 
+-include ../../UFconfig/UFconfig.mk
++include /usr/share/misc/UFconfig.mk
+ 
+ C = $(CC) $(CFLAGS) $(CHOLMOD_CONFIG)
+ 
+@@ -117,7 +117,7 @@
+ 
+ I = -I../../AMD/Include -I../../AMD/Source -I../../COLAMD/Include \
+ 	-I$(METIS_PATH)/Lib -I../../CCOLAMD/Include -I../../CAMD/Include \
+-	-I../Include -I../../UFconfig
++	-I../Include
+ 
+ #-------------------------------------------------------------------------------
+ # Check Module:
+diff -ur CHOLMOD/Makefile CHOLMOD-uf/Makefile
+--- CHOLMOD/Makefile	2006-11-30 17:40:08.000000000 +0100
++++ CHOLMOD-uf/Makefile	2007-12-02 17:12:17.000000000 +0100
+@@ -7,7 +7,7 @@
+ 
+ default: all
+ 
+-include ../UFconfig/UFconfig.mk
++include /usr/share/misc/UFconfig.mk
+ 
+ # Compile the C-callable libraries and the Demo programs.
+ all:
+diff -ur CHOLMOD/MATLAB/cholmod_matlab.h CHOLMOD-uf/MATLAB/cholmod_matlab.h
+--- CHOLMOD/MATLAB/cholmod_matlab.h	2007-06-14 19:52:47.000000000 +0200
++++ CHOLMOD-uf/MATLAB/cholmod_matlab.h	2007-12-02 17:13:28.000000000 +0100
+@@ -4,7 +4,7 @@
+ 
+ /* Shared prototypes and definitions for CHOLMOD mexFunctions */
+ 
+-#include "UFconfig.h"
++#include <UFconfig.h>
+ #ifndef DLONG
+ #define DLONG
+ #endif
+diff -ur CHOLMOD/MATLAB/Makefile CHOLMOD-uf/MATLAB/Makefile
+--- CHOLMOD/MATLAB/Makefile	2007-05-05 19:08:13.000000000 +0200
++++ CHOLMOD-uf/MATLAB/Makefile	2007-12-02 17:11:22.000000000 +0100
+@@ -4,10 +4,10 @@
+ 
+ default: all
+ 
+-include ../../UFconfig/UFconfig.mk
++include /usr/share/misc/UFconfig.mk
+ 
+ I = -I. -I../../AMD/Include -I../../COLAMD/Include -I../../CCOLAMD/Include \
+-    -I../../CAMD/Include -I../Include -I../../UFconfig -I$(METIS_PATH)/Lib
++    -I../../CAMD/Include -I../Include -I$(METIS_PATH)/Lib
+ 
+ all: mread sdmult ldlsolve resymbol symbfact2 chol2 lchol \
+ 	ldlchol cholmod2 ldlupdate metis bisect nesdis etree2 sparse2 analyze \
+diff -ur CHOLMOD/Tcov/Makefile CHOLMOD-uf/Tcov/Makefile
+--- CHOLMOD/Tcov/Makefile	2007-05-05 19:12:46.000000000 +0200
++++ CHOLMOD-uf/Tcov/Makefile	2007-12-02 17:11:45.000000000 +0100
+@@ -5,7 +5,7 @@
+ # If you compile CHOLMOD with -DNPARTITION, then you do not need METIS,
+ # CCOLAMD, or the Partition module.
+ 
+-include ../../UFconfig/UFconfig.mk
++include /usr/share/misc/UFconfig.mk
+ include Make.inc
+ 
+ # Tcov requires gcc
+@@ -31,7 +31,7 @@
+ 
+ I = -I../../AMD/Include -I../../COLAMD/Include \
+ 	-I$(METIS_PATH)/Lib -I../../CCOLAMD/Include -I../../CAMD/Include \
+-	-I../Include -I../../UFconfig
++	-I../Include
+ 
+ default: cm cl z_demo l_demo cmread clread
+ 

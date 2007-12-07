@@ -29,29 +29,29 @@ CHOLMOD is a set of ANSI C routines for sparse Cholesky
 factorization and update/downdate.
 
 %package devel
-Summary:	Header files for cholmod library
-Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki cholmod
+Summary:	Header files for CHOLMOD library
+Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki CHOLMOD
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	UFconfig
 
 %description devel
-Header files for cholmod library.
+Header files for CHOLMOD library.
 
 %description devel -l pl.UTF-8
-Pliki nagłówkowe biblioteki cholmod.
+Pliki nagłówkowe biblioteki CHOLMOD.
 
 %package static
-Summary:	Static cholmod library
-Summary(pl.UTF-8):	Statyczna biblioteka cholmod
+Summary:	Static CHOLMOD library
+Summary(pl.UTF-8):	Statyczna biblioteka CHOLMOD
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 
 %description static
-Static cholmod library.
+Static CHOLMOD library.
 
 %description static -l pl.UTF-8
-Statyczna biblioteka cholmod.
+Statyczna biblioteka CHOLMOD.
 
 %prep
 %setup -q -n %{name}

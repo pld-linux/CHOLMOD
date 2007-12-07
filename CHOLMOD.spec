@@ -72,13 +72,13 @@ Statyczna biblioteka cholmod.
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT%{_includedir}
+install -d $RPM_BUILD_ROOT%{_includedir}/cholmod
 
 %{__make} -C Lib install \
 	DESTDIR=$RPM_BUILD_ROOT \
 	libdir=%{_libdir}
 
-install Include/*.h $RPM_BUILD_ROOT%{_includedir}
+install Include/*.h $RPM_BUILD_ROOT%{_includedir}/cholmod
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -95,7 +95,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libcholmod.so
 %{_libdir}/libcholmod.la
-%{_includedir}/*.h
+%{_includedir}/cholmod
 
 %files static
 %defattr(644,root,root,755)

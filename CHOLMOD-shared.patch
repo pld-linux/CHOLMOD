@@ -73,7 +73,7 @@ diff -ur CHOLMOD/Lib/Makefile CHOLMOD.shared/Lib/Makefile
  
  clean:
  	- $(RM) $(CLEAN)
-@@ -109,39 +109,41 @@
+@@ -109,39 +109,42 @@
  # to compile just the double/int version, use OBJ = $(DI)
  OBJ = $(DI) $(DL)
  
@@ -93,7 +93,8 @@ diff -ur CHOLMOD/Lib/Makefile CHOLMOD.shared/Lib/Makefile
 -I = -I../../AMD/Include -I../../AMD/Source -I../../COLAMD/Include \
 -	-I$(METIS_PATH)/Lib -I../../CCOLAMD/Include -I../../CAMD/Include \
 -	-I../Include
-+I = -I../Include -I$(METIS_PATH)
++I = -I../Include -I/usr/include/amd -I/usr/include/camd -I/usr/include/colamd \
++	-I/usr/include/ccolamd -I$(METIS_PATH)
  
  #-------------------------------------------------------------------------------
  # Check Module:

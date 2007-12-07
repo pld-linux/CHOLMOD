@@ -40,15 +40,15 @@ diff -ur CHOLMOD/Demo/Makefile CHOLMOD.shared/Demo/Makefile
  
  cholmod_demo: library cholmod_demo.c cholmod_demo.h
 -	$(C) -o cholmod_demo $(I) cholmod_demo.c $(LIB2)
-+	libtool --tag=CC --mode=link $(CC) $(CFLAGS) $(CHOLMOD_CONFIG) -I../Include -o cholmod_demo cholmod_demo.c $(LIB2)
++	libtool --tag=CC --mode=link $(CC) $(LDFLAGS) $(CFLAGS) $(CHOLMOD_CONFIG) -I../Include -o cholmod_demo cholmod_demo.c $(LIB2)
  
  cholmod_simple: library cholmod_simple.c
 -	$(C) -o cholmod_simple $(I) cholmod_simple.c $(LIB2)
-+	libtool --tag=CC --mode=link $(CC) $(CFLAGS) $(CHOLMOD_CONFIG) -I../Include -o cholmod_simple cholmod_simple.c $(LIB2)
++	libtool --tag=CC --mode=link $(CC) $(LDFLAGS) $(CFLAGS) $(CHOLMOD_CONFIG) -I../Include -o cholmod_simple cholmod_simple.c $(LIB2)
  
  cholmod_l_demo: library cholmod_l_demo.c cholmod_demo.h
 -	$(C) -o cholmod_l_demo $(I) cholmod_l_demo.c $(LIB2)
-+	libtool --tag=CC --mode=link $(CC) $(CFLAGS) $(CHOLMOD_CONFIG) -I../Include -o cholmod_l_demo cholmod_l_demo.c $(LIB2)
++	libtool --tag=CC --mode=link $(CC) $(LDFLAGS) $(CFLAGS) $(CHOLMOD_CONFIG) -I../Include -o cholmod_l_demo cholmod_l_demo.c $(LIB2)
  
  readhb: readhb.f
  	$(F77) $(FFLAGS) -o readhb readhb.f

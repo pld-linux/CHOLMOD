@@ -3,6 +3,7 @@
 %bcond_with	metis		# build with metis lib
 #
 Summary:	CHOLMOD: sparse supernodal Cholesky factorization and update/downdate
+Summary(pl.UTF-8):	CHOLMOD - rzadki wielowęzłowy rozkład Cholesky'ego z poprawianiem
 Name:		CHOLMOD
 Version:	1.6.0
 Release:	1
@@ -13,20 +14,24 @@ Source0:	http://www.cise.ufl.edu/research/sparse/cholmod/%{name}-%{version}.tar.
 Patch0:		%{name}-ufconfig.patch
 Patch1:		%{name}-shared.patch
 URL:		http://www.cise.ufl.edu/research/sparse/cholmod/
-BuildRequires:	blas-devel
-BuildRequires:	CCOLAMD-devel
 BuildRequires:	AMD-devel
 BuildRequires:	CAMD-devel
+BuildRequires:	CCOLAMD-devel
 BuildRequires:	COLAMD-devel
+BuildRequires:	UFconfig
+BuildRequires:	blas-devel
 BuildRequires:	lapack-devel
 BuildRequires:	libtool >= 2:1.5
 %{?with_metis:BuildRequires:	metis-devel}
-BuildRequires:	UFconfig
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
 CHOLMOD is a set of ANSI C routines for sparse Cholesky
 factorization and update/downdate.
+
+%description -l pl.UTF-8
+CHOLMOD to zbiór procedur ANSI C do rzadkiego rozkładu Cholesky'ego z
+poprawianiem.
 
 %package devel
 Summary:	Header files for CHOLMOD library

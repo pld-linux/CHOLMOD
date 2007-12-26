@@ -7,7 +7,7 @@ Summary(pl.UTF-8):	CHOLMOD - rzadki wielowęzłowy rozkład Cholesky'ego z popra
 Name:		CHOLMOD
 Version:	1.6.0
 Release:	1
-License:	LGPL
+License:	GPL v2+ (some parts LGPL v2.1+)
 Group:		Libraries
 Source0:	http://www.cise.ufl.edu/research/sparse/cholmod/%{name}-%{version}.tar.gz
 # Source0-md5:	d07af9879992e597fb197daaefd2eb19
@@ -93,11 +93,13 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc README.txt Doc/UserGuide.pdf
+%doc README.txt Doc/ChangeLog
 %attr(755,root,root) %{_libdir}/libcholmod.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libcholmod.so.0
 
 %files devel
 %defattr(644,root,root,755)
+%doc Doc/UserGuide.pdf
 %attr(755,root,root) %{_libdir}/libcholmod.so
 %{_libdir}/libcholmod.la
 %{_includedir}/cholmod

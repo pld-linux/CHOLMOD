@@ -81,7 +81,7 @@ diff -ur CHOLMOD/Lib/Makefile CHOLMOD.shared/Lib/Makefile
 -	$(AR) libcholmod.a $(OBJ)
 -	$(RANLIB) libcholmod.a
 +libcholmod.la: $(OBJ)
-+	libtool --tag=CC --mode=link $(CC) $(LDFLAGS) -o libcholmod.la -rpath $(libdir) $(OBJ) -lm \
++	libtool --tag=CC --mode=link $(CC) $(LDFLAGS) -o libcholmod.la -rpath $(libdir) $(OBJ:.o=.lo) -lm \
 +		-lamd -lcolamd -lccolamd -lcamd $(METIS) $(LAPACK) $(BLAS)
 +
 +install: libcholmod.la

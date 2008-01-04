@@ -67,9 +67,9 @@ Statyczna biblioteka CHOLMOD.
 %{__make} \
 	CC="%{__cc}" \
 %if %{with metis}
-	CFLAGS="%{rpmcflags} -fPIC" \
+	CFLAGS="%{rpmcflags}" \
 %else
-	CFLAGS="%{rpmcflags} -fPIC -DNPARTITION" \
+	CFLAGS="%{rpmcflags} -DNPARTITION" \
 	METIS= \
 %endif
 	LDFLAGS="%{rpmldflags}" \

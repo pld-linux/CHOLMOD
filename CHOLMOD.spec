@@ -1,28 +1,32 @@
 #
 # Conditional build:
-%bcond_with	metis		# build with metis lib
+%bcond_with	metis		# build with partition support (using metis lib)
 #
 Summary:	CHOLMOD: sparse supernodal Cholesky factorization and update/downdate
 Summary(pl.UTF-8):	CHOLMOD - rzadki wielowęzłowy rozkład Cholesky'ego z poprawianiem
 Name:		CHOLMOD
-Version:	1.7.3
+Version:	1.7.4
 Release:	1
 License:	GPL v2+ (some parts LGPL v2.1+)
 Group:		Libraries
 Source0:	http://www.cise.ufl.edu/research/sparse/cholmod/%{name}-%{version}.tar.gz
-# Source0-md5:	e3bcfeefe40a2f3ef712e1bd3ec36781
+# Source0-md5:	c2088078a86ca1a88e64037f80ae6540
 Patch0:		%{name}-ufconfig.patch
 Patch1:		%{name}-shared.patch
+# http://www.cise.ufl.edu/research/sparse/cholmod/metis.patch (for METIS 5)
+Patch2:		%{name}-metis.patch
 URL:		http://www.cise.ufl.edu/research/sparse/cholmod/
-BuildRequires:	AMD-devel
-BuildRequires:	CAMD-devel
-BuildRequires:	CCOLAMD-devel
-BuildRequires:	COLAMD-devel
-BuildRequires:	UFconfig
+BuildRequires:	AMD-devel >= 2.2.3
+BuildRequires:	COLAMD-devel >= 2.7.4
+BuildRequires:	UFconfig >= 3.7.0
 BuildRequires:	blas-devel
 BuildRequires:	lapack-devel
 BuildRequires:	libtool >= 2:1.5
-%{?with_metis:BuildRequires:	metis-devel}
+%if %{with metis}
+BuildRequires:	CAMD-devel >= 2.2.3
+BuildRequires:	CCOLAMD-devel >= 2.7.4
+BuildRequires:	metis-devel >= 5
+%endif
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -38,7 +42,7 @@ Summary:	Header files for CHOLMOD library
 Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki CHOLMOD
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
-Requires:	UFconfig
+Requires:	UFconfig >= 3.7.0
 
 %description devel
 Header files for CHOLMOD library.
@@ -62,16 +66,13 @@ Statyczna biblioteka CHOLMOD.
 %setup -q -n %{name}
 %patch0 -p1
 %patch1 -p1
+%patch2 -p2
 
 %build
 %{__make} \
 	CC="%{__cc}" \
-%if %{with metis}
+	%{?with_metis:WITH_METIS=1} \
 	CFLAGS="%{rpmcflags}" \
-%else
-	CFLAGS="%{rpmcflags} -DNPARTITION" \
-	METIS= \
-%endif
 	LDFLAGS="%{rpmldflags}" \
 	libdir=%{_libdir}
 

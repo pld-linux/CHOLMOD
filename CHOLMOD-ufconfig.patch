@@ -54,9 +54,8 @@ diff -ur CHOLMOD/Include/cholmod_internal.h CHOLMOD-uf/Include/cholmod_internal.
  
  /* -------------------------------------------------------------------------- */
  /* Size_max: the largest value of size_t */
-diff -ur CHOLMOD/Lib/Makefile CHOLMOD-uf/Lib/Makefile
---- CHOLMOD/Lib/Makefile	2007-05-05 16:36:56.000000000 +0200
-+++ CHOLMOD-uf/Lib/Makefile	2007-12-02 17:11:09.000000000 +0100
+--- CHOLMOD/Lib/Makefile.orig	2011-12-14 18:17:26.000000000 +0100
++++ CHOLMOD/Lib/Makefile	2012-01-01 17:07:06.246620933 +0100
 @@ -6,7 +6,7 @@
  
  ccode: all
@@ -64,17 +63,32 @@ diff -ur CHOLMOD/Lib/Makefile CHOLMOD-uf/Lib/Makefile
 -include ../../UFconfig/UFconfig.mk
 +include /usr/share/misc/UFconfig.mk
  
- C = $(CC) $(CFLAGS) $(CHOLMOD_CONFIG)
+ #-------------------------------------------------------------------------------
+ # the optional Partition module requires METIS, CAMD, and CCOLAMD
+@@ -14,9 +14,9 @@
+ CONFIG =
+ ifeq (,$(findstring -DNPARTITION, $(CHOLMOD_CONFIG)))
+     # METIS is check if METIS is available
+-    ifeq (../../metis-4.0, $(wildcard ../../metis-4.0))
+-        I_WITH_PARTITION = -I$(METIS_PATH)/Lib \
+-            -I../../CCOLAMD/Include -I../../CAMD/Include
++    ifeq ($(WITH_METIS), 1)
++        I_WITH_PARTITION = -I/usr/include/metis \
++            -I/usr/include/ccolamd -I/usr/include/camd
+     else
+         # METIS is not available, but CHOLMOD_CONFIG does not specify
+         # -DNPARTITION.  Add it here so we can still compile CHOLMOD.
+@@ -24,8 +24,8 @@
+     endif
+ endif
  
-@@ -117,7 +117,7 @@
- 
- I = -I../../AMD/Include -I../../AMD/Source -I../../COLAMD/Include \
- 	-I$(METIS_PATH)/Lib -I../../CCOLAMD/Include -I../../CAMD/Include \
--	-I../Include -I../../UFconfig
-+	-I../Include
+-I = -I../../AMD/Include -I../../AMD/Source -I../../COLAMD/Include \
+-	$(I_WITH_PARTITION) -I../Include -I../../UFconfig
++I = -I/usr/include/amd -I/usr/include/colamd \
++	$(I_WITH_PARTITION) -I../Include
  
  #-------------------------------------------------------------------------------
- # Check Module:
+ 
 diff -ur CHOLMOD/Makefile CHOLMOD-uf/Makefile
 --- CHOLMOD/Makefile	2006-11-30 17:40:08.000000000 +0100
 +++ CHOLMOD-uf/Makefile	2007-12-02 17:12:17.000000000 +0100

@@ -17,14 +17,15 @@ Patch1:		%{name}-shared.patch
 Patch2:		%{name}-metis.patch
 URL:		http://www.cise.ufl.edu/research/sparse/cholmod/
 BuildRequires:	AMD-devel >= 2.2.3
+BuildRequires:	CAMD-devel >= 2.2.3
+BuildRequires:	CCOLAMD-devel >= 2.7.3
 BuildRequires:	COLAMD-devel >= 2.7.4
 BuildRequires:	UFconfig >= 3.7.0
 BuildRequires:	blas-devel
+BuildRequires:	gcc-fortran
 BuildRequires:	lapack-devel
 BuildRequires:	libtool >= 2:1.5
 %if %{with metis}
-BuildRequires:	CAMD-devel >= 2.2.3
-BuildRequires:	CCOLAMD-devel >= 2.7.4
 BuildRequires:	metis-devel >= 5
 %endif
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)

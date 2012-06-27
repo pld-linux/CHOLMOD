@@ -1,16 +1,15 @@
-diff -ur ../SuiteSparse.orig/CHOLMOD/Partition/cholmod_metis.c ./CHOLMOD/Partition/cholmod_metis.c
---- ../SuiteSparse.orig/CHOLMOD/Partition/cholmod_metis.c	2007-05-04 11:47:17.000000000 -0500
-+++ ./CHOLMOD/Partition/cholmod_metis.c	2011-10-21 18:21:54.000000000 -0500
-@@ -76,7 +76,7 @@
+--- CHOLMOD/Partition/cholmod_metis.c.orig	2012-05-29 17:02:05.000000000 +0200
++++ CHOLMOD/Partition/cholmod_metis.c	2012-06-27 18:05:33.131952214 +0200
+@@ -75,7 +75,7 @@
  #ifdef DUMP_GRAPH
  #include <stdio.h>
  /* After dumping the graph with this routine, run "onmetis metisgraph" */
--static void dumpgraph (idxtype *Mp, idxtype *Mi, UF_long n,
-+static void dumpgraph (idx_t *Mp, idx_t *Mi, UF_long n,
+-static void dumpgraph (idxtype *Mp, idxtype *Mi, SuiteSparse_long n,
++static void dumpgraph (idx_t *Mp, idx_t *Mi, SuiteSparse_long n,
      cholmod_common *Common)
  {
-     UF_long i, j, p, nz ;
-@@ -162,7 +162,7 @@
+     SuiteSparse_long i, j, p, nz ;
+@@ -161,7 +161,7 @@
      s = GUESS ((double) nz, (double) n) ;
      s *= Common->metis_memory ;
  
@@ -19,7 +18,7 @@ diff -ur ../SuiteSparse.orig/CHOLMOD/Partition/cholmod_metis.c ./CHOLMOD/Partiti
      {
  	/* don't even attempt to malloc such a large block */
  	return (FALSE) ;
-@@ -173,7 +173,7 @@
+@@ -172,7 +172,7 @@
      metis_guard *= Common->metis_memory ;
  
      /* attempt to malloc the block */
@@ -28,7 +27,7 @@ diff -ur ../SuiteSparse.orig/CHOLMOD/Partition/cholmod_metis.c ./CHOLMOD/Partiti
      if (p == NULL)
      {
  	/* failure - return out-of-memory condition */
-@@ -181,7 +181,7 @@
+@@ -180,7 +180,7 @@
      }
  
      /* success - free the block */
@@ -37,7 +36,7 @@ diff -ur ../SuiteSparse.orig/CHOLMOD/Partition/cholmod_metis.c ./CHOLMOD/Partiti
      return (TRUE) ;
  }
  
-@@ -211,7 +211,7 @@
+@@ -210,7 +210,7 @@
  )
  {
      Int *Ap, *Ai ;
@@ -46,7 +45,7 @@ diff -ur ../SuiteSparse.orig/CHOLMOD/Partition/cholmod_metis.c ./CHOLMOD/Partiti
      Int n, nleft, nright, j, p, csep, total_weight, lightest, nz ;
      int Opt [8], nn, csp ;
      size_t n1 ;
-@@ -260,7 +260,7 @@
+@@ -259,7 +259,7 @@
      /* ---------------------------------------------------------------------- */
  
  #ifdef LONG
@@ -55,7 +54,7 @@ diff -ur ../SuiteSparse.orig/CHOLMOD/Partition/cholmod_metis.c ./CHOLMOD/Partiti
      {
  	/* CHOLMOD's matrix is too large for METIS */
  	return (EMPTY) ;
-@@ -283,34 +283,34 @@
+@@ -282,34 +282,34 @@
      DEBUG (for (j = 0 ; j < n ; j++) ASSERT (Anw [j] > 0)) ;
  
      /* ---------------------------------------------------------------------- */
@@ -108,7 +107,7 @@ diff -ur ../SuiteSparse.orig/CHOLMOD/Partition/cholmod_metis.c ./CHOLMOD/Partiti
  	    return (EMPTY) ;
  	}
  	for (p = 0 ; p < nz ; p++)
-@@ -338,13 +338,13 @@
+@@ -337,13 +337,13 @@
      if (!metis_memory_ok (n, nz, Common))
      {
  	/* METIS might ask for too much memory and thus terminate the program */
@@ -128,7 +127,7 @@ diff -ur ../SuiteSparse.orig/CHOLMOD/Partition/cholmod_metis.c ./CHOLMOD/Partiti
  	}
  	return (EMPTY) ;
      }
-@@ -370,27 +370,27 @@
+@@ -369,27 +369,27 @@
  #endif
  
      nn = n ;
@@ -164,7 +163,7 @@ diff -ur ../SuiteSparse.orig/CHOLMOD/Partition/cholmod_metis.c ./CHOLMOD/Partiti
      }
  
      /* ---------------------------------------------------------------------- */
-@@ -508,7 +508,7 @@
+@@ -507,7 +507,7 @@
  {
      double d ;
      Int *Iperm, *Iwork, *Bp, *Bi ;
@@ -173,7 +172,7 @@ diff -ur ../SuiteSparse.orig/CHOLMOD/Partition/cholmod_metis.c ./CHOLMOD/Partiti
      cholmod_sparse *B ;
      Int i, j, n, nz, p, identity, uncol ;
      int Opt [8], nn, zero = 0 ;
-@@ -601,7 +601,7 @@
+@@ -600,7 +600,7 @@
      /* ---------------------------------------------------------------------- */
  
  #ifdef LONG
@@ -182,7 +181,7 @@ diff -ur ../SuiteSparse.orig/CHOLMOD/Partition/cholmod_metis.c ./CHOLMOD/Partiti
      {
  	/* CHOLMOD's matrix is too large for METIS */
  	CHOLMOD(free_sparse) (&B, Common) ;
-@@ -630,29 +630,29 @@
+@@ -629,29 +629,29 @@
      /* allocate the METIS input arrays, if needed */
      /* ---------------------------------------------------------------------- */
  
@@ -226,7 +225,7 @@ diff -ur ../SuiteSparse.orig/CHOLMOD/Partition/cholmod_metis.c ./CHOLMOD/Partiti
  	    return (FALSE) ;
  	}
  	for (j = 0 ; j <= n ; j++)
-@@ -741,16 +741,16 @@
+@@ -740,16 +740,16 @@
      /* free the METIS input arrays */
      /* ---------------------------------------------------------------------- */
  
@@ -248,4 +247,3 @@ diff -ur ../SuiteSparse.orig/CHOLMOD/Partition/cholmod_metis.c ./CHOLMOD/Partiti
      }
  
      CHOLMOD(free_sparse) (&B, Common) ;
-Only in .: metis.patch

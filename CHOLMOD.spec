@@ -5,22 +5,22 @@
 Summary:	CHOLMOD: sparse supernodal Cholesky factorization and update/downdate
 Summary(pl.UTF-8):	CHOLMOD - rzadki wielowęzłowy rozkład Cholesky'ego z poprawianiem
 Name:		CHOLMOD
-Version:	1.7.4
+Version:	2.0.0
 Release:	1
 License:	GPL v2+ (some parts LGPL v2.1+)
 Group:		Libraries
 Source0:	http://www.cise.ufl.edu/research/sparse/cholmod/%{name}-%{version}.tar.gz
-# Source0-md5:	c2088078a86ca1a88e64037f80ae6540
+# Source0-md5:	3804ebf46feef5fece877ad52ea84b2b
 Patch0:		%{name}-ufconfig.patch
 Patch1:		%{name}-shared.patch
 # http://www.cise.ufl.edu/research/sparse/cholmod/metis.patch (for METIS 5)
 Patch2:		%{name}-metis.patch
 URL:		http://www.cise.ufl.edu/research/sparse/cholmod/
-BuildRequires:	AMD-devel >= 2.2.3
-BuildRequires:	CAMD-devel >= 2.2.3
-BuildRequires:	CCOLAMD-devel >= 2.7.3
-BuildRequires:	COLAMD-devel >= 2.7.4
-BuildRequires:	UFconfig >= 3.7.0
+BuildRequires:	AMD-devel >= 2.3.0
+BuildRequires:	CAMD-devel >= 2.3.0
+BuildRequires:	CCOLAMD-devel >= 2.8.0
+BuildRequires:	COLAMD-devel >= 2.8.0
+BuildRequires:	SuiteSparse_config-devel >= 4.0.0
 BuildRequires:	blas-devel
 BuildRequires:	gcc-fortran
 BuildRequires:	lapack-devel
@@ -28,6 +28,11 @@ BuildRequires:	libtool >= 2:1.5
 %if %{with metis}
 BuildRequires:	metis-devel >= 5
 %endif
+Requires:	AMD >= 2.3.0
+Requires:	CAMD >= 2.3.0
+Requires:	CCOLAMD >= 2.8.0
+Requires:	COLAMD >= 2.8.0
+Requires:	SuiteSparse_config-libs >= 4.0.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -43,7 +48,11 @@ Summary:	Header files for CHOLMOD library
 Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki CHOLMOD
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
-Requires:	UFconfig >= 3.7.0
+Requires:	AMD-devel >= 2.3.0
+Requires:	CAMD-devel >= 2.3.0
+Requires:	CCOLAMD-devel >= 2.8.0
+Requires:	COLAMD-devel >= 2.8.0
+Requires:	SuiteSparse_config-devel >= 4.0.0
 
 %description devel
 Header files for CHOLMOD library.
@@ -67,7 +76,7 @@ Statyczna biblioteka CHOLMOD.
 %setup -q -n %{name}
 %patch0 -p1
 %patch1 -p1
-%patch2 -p2
+%patch2 -p1
 
 %build
 %{__make} \

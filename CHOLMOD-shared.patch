@@ -1,18 +1,27 @@
---- CHOLMOD/Demo/Makefile.orig	2012-06-27 18:03:08.271958293 +0200
-+++ CHOLMOD/Demo/Makefile	2012-06-27 18:04:38.631954503 +0200
-@@ -15,9 +15,8 @@
- CONFIG =
+--- CHOLMOD/Demo/Makefile.orig	2012-08-28 19:15:59.367085674 +0200
++++ CHOLMOD/Demo/Makefile	2012-08-28 19:27:39.750404409 +0200
+@@ -16,24 +16,17 @@
+ CONFIG = -DNPARTITION
+ # check if METIS is requested and available
  ifeq (,$(findstring -DNPARTITION, $(CHOLMOD_CONFIG)))
-     # check if METIS is available
--    ifeq (../../metis-4.0, $(wildcard ../../metis-4.0))
--        LIB_WITH_PARTITION = $(METIS) ../../CCOLAMD/Lib/libccolamd.a \
--            ../../CAMD/Lib/libcamd.a
+-    # METIS is requested.  See if it is available
+-    ifeq ($(METIS_PATH), $(wildcard $(METIS_PATH)))
+-        ifeq (../../CAMD, $(wildcard ../../CAMD))
+-            ifeq (../../CCOLAMD, $(wildcard ../../CCOLAMD))
+-                # METIS, CAMD, and CCOLAMD are available
+-                LIB_WITH_PARTITION = $(METIS) ../../CCOLAMD/Lib/libccolamd.a \
+-                    ../../CAMD/Lib/libcamd.a
+-                I_WITH_PARTITION = -I$(METIS_PATH)/Lib \
+-                    -I../../CCOLAMD/Include -I../../CAMD/Include
++    # METIS is requested.
 +    ifeq ($(WITH_METIS), 1)
-+        LIB_WITH_PARTITION = $(METIS) -lccolamd -lcamd
-     else
-         # METIS is not available, but CHOLMOD_CONFIG does not specify
-         # -DNPARTITION.  Add it here so we can still compile CHOLMOD.
-@@ -26,8 +25,7 @@
++                LIB_WITH_PARTITION = -lmetis -lccolamd -lcamd
++                I_WITH_PARTITION = -I/usr/include/metis \
++                    -I/usr/include/ccolamd -I/usr/include/camd
+                 CONFIG =
+-            endif
+-        endif
+     endif
  endif
  #-------------------------------------------------------------------------------
  
@@ -22,7 +31,7 @@
  	$(LIB_WITH_PARTITION) $(LAPACK) $(BLAS) $(XERBLA) $(LIB)
  
  #-------------------------------------------------------------------------------
-@@ -69,28 +67,19 @@
+@@ -75,35 +68,25 @@
  #-------------------------------------------------------------------------------
  # See below if you compile with -DNPARTITION
  library:
@@ -31,10 +40,11 @@
  	( cd ../Lib ; $(MAKE) )
 -	( cd ../../AMD ; $(MAKE) library )
 -	( cd ../../COLAMD ; $(MAKE) library )
--ifneq (,$(findstring -DNPARTITION, $(CHOLMOD_CONFIG)))
+-ifneq (,$(findstring -DNPARTITION, $(CONFIG)))
 -else
 -	( cd ../../CCOLAMD ; $(MAKE) library )
 -	( cd ../../CAMD ; $(MAKE) library )
+-	( cd $(METIS_PATH) && $(MAKE) )
 -endif
  #-------------------------------------------------------------------------------
  
@@ -53,25 +63,19 @@
 +	libtool --tag=CC --mode=link $(C) $(LDFLAGS) -o cholmod_l_demo $(I) cholmod_l_demo.c $(LIB2)
  
  readhb: readhb.f
- 	$(F77) $(FFLAGS) -o readhb readhb.f
---- CHOLMOD/Lib/Makefile.orig	2012-01-01 17:10:50.673295114 +0100
-+++ CHOLMOD/Lib/Makefile	2012-01-01 17:16:30.863306505 +0100
-@@ -11,12 +11,14 @@
- #-------------------------------------------------------------------------------
- # the optional Partition module requires METIS, CAMD, and CCOLAMD
- I_WITH_PARTITION =
-+LIB_WITH_PARTITION =
- CONFIG =
- ifeq (,$(findstring -DNPARTITION, $(CHOLMOD_CONFIG)))
-     # METIS is check if METIS is available
-     ifeq ($(WITH_METIS), 1)
-         I_WITH_PARTITION = -I/usr/include/metis \
-             -I/usr/include/ccolamd -I/usr/include/camd
-+	LIB_WITH_PARTITION = $(METIS) -lccolamd -lcamd
-     else
-         # METIS is not available, but CHOLMOD_CONFIG does not specify
-         # -DNPARTITION.  Add it here so we can still compile CHOLMOD.
-@@ -31,14 +33,14 @@
+-	$(F77) $(FFLAGS) -o readhb readhb.f
++	$(F77) $(LDFLAGS) $(FFLAGS) -o readhb readhb.f
+ 
+ readhb2: readhb2.f
+-	$(F77) $(FFLAGS) -O -o readhb2 readhb2.f
++	$(F77) $(LDFLAGS) $(FFLAGS) -O -o readhb2 readhb2.f
+ 
+ reade: reade.f
+-	$(F77) $(FFLAGS) -O -o reade reade.f
++	$(F77) $(LDFLAGS) $(FFLAGS) -O -o reade reade.f
+--- CHOLMOD/Lib/Makefile.orig	2012-08-28 19:15:59.367085674 +0200
++++ CHOLMOD/Lib/Makefile	2012-08-28 19:15:59.397085673 +0200
+@@ -33,14 +33,14 @@
  
  C = $(CC) $(CF) $(CHOLMOD_CONFIG) $(CONFIG)
  
@@ -89,7 +93,7 @@
  
  clean:
  	- $(RM) $(CLEAN)
-@@ -130,9 +132,13 @@
+@@ -132,9 +132,13 @@
  # to compile just the double/int version, use OBJ = $(DI)
  OBJ = $(DI) $(DL)
  
@@ -106,7 +110,7 @@
  
  $(OBJ): $(INC)
  
-@@ -141,24 +147,24 @@
+@@ -143,24 +147,24 @@
  #-------------------------------------------------------------------------------
  
  cholmod_check.o: ../Check/cholmod_check.c
@@ -137,7 +141,7 @@
  
  
  #-------------------------------------------------------------------------------
-@@ -166,92 +172,92 @@
+@@ -168,92 +172,92 @@
  #-------------------------------------------------------------------------------
  
  cholmod_common.o: ../Core/cholmod_common.c
@@ -258,7 +262,7 @@
  
  
  #-------------------------------------------------------------------------------
-@@ -259,116 +265,116 @@
+@@ -261,116 +265,116 @@
  #-------------------------------------------------------------------------------
  
  cholmod_amd.o: ../Cholesky/cholmod_amd.c
@@ -409,7 +413,7 @@
  
  
  #-------------------------------------------------------------------------------
-@@ -376,88 +382,88 @@
+@@ -378,88 +382,88 @@
  #-------------------------------------------------------------------------------
  
  cholmod_horzcat.o: ../MatrixOps/cholmod_horzcat.c
@@ -522,9 +526,9 @@
  
  
  #-------------------------------------------------------------------------------
-@@ -466,24 +472,24 @@
- 
+@@ -469,24 +473,24 @@
  cholmod_super_numeric.o: ../Supernodal/cholmod_super_numeric.c \
+         ../Supernodal/t_cholmod_gpu.c \
  	../Supernodal/t_cholmod_super_numeric.c
 -	$(C) -c $(I) $<
 +	libtool --tag=CC --mode=compile $(C) $(I) -c $<

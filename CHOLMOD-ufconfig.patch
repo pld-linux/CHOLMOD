@@ -53,8 +53,8 @@ diff -ur CHOLMOD/Include/cholmod_internal.h CHOLMOD-uf/Include/cholmod_internal.
  
  /* -------------------------------------------------------------------------- */
  /* Size_max: the largest value of size_t */
---- CHOLMOD/Lib/Makefile.orig	2011-12-14 18:17:26.000000000 +0100
-+++ CHOLMOD/Lib/Makefile	2012-01-01 17:07:06.246620933 +0100
+--- CHOLMOD/Lib/Makefile.orig	2012-06-21 07:35:19.000000000 +0200
++++ CHOLMOD/Lib/Makefile	2012-08-28 19:15:04.193753493 +0200
 @@ -6,7 +6,7 @@
  
  ccode: all
@@ -64,22 +64,30 @@ diff -ur CHOLMOD/Include/cholmod_internal.h CHOLMOD-uf/Include/cholmod_internal.
  
  #-------------------------------------------------------------------------------
  # the optional Partition module requires METIS, CAMD, and CCOLAMD
-@@ -14,9 +14,9 @@
- CONFIG =
+@@ -15,24 +15,19 @@
+ CONFIG = -DNPARTITION
+ # check if METIS is requested and available
  ifeq (,$(findstring -DNPARTITION, $(CHOLMOD_CONFIG)))
-     # METIS is check if METIS is available
--    ifeq (../../metis-4.0, $(wildcard ../../metis-4.0))
--        I_WITH_PARTITION = -I$(METIS_PATH)/Lib \
--            -I../../CCOLAMD/Include -I../../CAMD/Include
+-    # METIS is requested.  See if it is available
+-    ifeq ($(METIS_PATH), $(wildcard $(METIS_PATH)))
+-        ifeq (../../CAMD, $(wildcard ../../CAMD))
+-            ifeq (../../CCOLAMD, $(wildcard ../../CCOLAMD))
++    # METIS is requested.
 +    ifeq ($(WITH_METIS), 1)
-+        I_WITH_PARTITION = -I/usr/include/metis \
-+            -I/usr/include/ccolamd -I/usr/include/camd
-     else
-         # METIS is not available, but CHOLMOD_CONFIG does not specify
-         # -DNPARTITION.  Add it here so we can still compile CHOLMOD.
-@@ -24,8 +24,8 @@
+                 # METIS, CAMD, and CCOLAMD are available
+-                LIB_WITH_PARTITION = $(METIS) ../../CCOLAMD/Lib/libccolamd.a \
+-                    ../../CAMD/Lib/libcamd.a
+-                I_WITH_PARTITION = -I$(METIS_PATH)/Lib \
+-                    -I../../CCOLAMD/Include -I../../CAMD/Include
++                LIB_WITH_PARTITION = -lmetis -lccolamd -lcamd
++                I_WITH_PARTITION = -I/usr/include/metis \
++                    -I/usr/include/ccolamd -I/usr/include/camd
+                 CONFIG =
+-            endif
+-        endif
      endif
  endif
+ #-------------------------------------------------------------------------------
  
 -I = -I../../AMD/Include -I../../AMD/Source -I../../COLAMD/Include \
 -	$(I_WITH_PARTITION) -I../Include -I../../SuiteSparse_config

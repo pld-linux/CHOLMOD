@@ -5,12 +5,12 @@
 Summary:	CHOLMOD: sparse supernodal Cholesky factorization and update/downdate
 Summary(pl.UTF-8):	CHOLMOD - rzadki wielowęzłowy rozkład Cholesky'ego z poprawianiem
 Name:		CHOLMOD
-Version:	2.0.1
+Version:	2.1.0
 Release:	1
 License:	GPL v2+ (some parts LGPL v2.1+)
 Group:		Libraries
 Source0:	http://www.cise.ufl.edu/research/sparse/cholmod/%{name}-%{version}.tar.gz
-# Source0-md5:	72b200a049bca1eb06bbb8a2c68be83a
+# Source0-md5:	9bc275f9117c3e3a6c4f23c29fd01761
 Patch0:		%{name}-ufconfig.patch
 Patch1:		%{name}-shared.patch
 # http://www.cise.ufl.edu/research/sparse/cholmod/metis.patch (for METIS 5)
@@ -20,7 +20,7 @@ BuildRequires:	AMD-devel >= 2.3.0
 BuildRequires:	CAMD-devel >= 2.3.0
 BuildRequires:	CCOLAMD-devel >= 2.8.0
 BuildRequires:	COLAMD-devel >= 2.8.0
-BuildRequires:	SuiteSparse_config-devel >= 4.0.0
+BuildRequires:	SuiteSparse_config-devel >= 4.1.0
 BuildRequires:	blas-devel
 BuildRequires:	gcc-fortran
 BuildRequires:	lapack-devel
@@ -32,7 +32,7 @@ Requires:	AMD >= 2.3.0
 Requires:	CAMD >= 2.3.0
 Requires:	CCOLAMD >= 2.8.0
 Requires:	COLAMD >= 2.8.0
-Requires:	SuiteSparse_config-libs >= 4.0.0
+Requires:	SuiteSparse_config-libs >= 4.1.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -82,6 +82,7 @@ Statyczna biblioteka CHOLMOD.
 %{__make} \
 	CC="%{__cc}" \
 	%{?with_metis:WITH_METIS=1} \
+	%{!?with_metis:PARTITION= LPARTITION=} \
 	CFLAGS="%{rpmcflags}" \
 	LDFLAGS="%{rpmldflags}" \
 	libdir=%{_libdir}
@@ -92,6 +93,7 @@ install -d $RPM_BUILD_ROOT%{_includedir}/cholmod
 
 %{__make} -C Lib install \
 	DESTDIR=$RPM_BUILD_ROOT \
+	%{!?with_metis:PARTITION= LPARTITION=} \
 	libdir=%{_libdir}
 
 install Include/*.h $RPM_BUILD_ROOT%{_includedir}/cholmod

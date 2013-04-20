@@ -5,12 +5,12 @@
 Summary:	CHOLMOD: sparse supernodal Cholesky factorization and update/downdate
 Summary(pl.UTF-8):	CHOLMOD - rzadki wielowęzłowy rozkład Cholesky'ego z poprawianiem
 Name:		CHOLMOD
-Version:	2.1.0
+Version:	2.1.1
 Release:	1
 License:	GPL v2+ (some parts LGPL v2.1+)
 Group:		Libraries
 Source0:	http://www.cise.ufl.edu/research/sparse/cholmod/%{name}-%{version}.tar.gz
-# Source0-md5:	9bc275f9117c3e3a6c4f23c29fd01761
+# Source0-md5:	3b9a68ebc60825a6f3cd5f5fa5930de8
 Patch0:		%{name}-ufconfig.patch
 Patch1:		%{name}-shared.patch
 # http://www.cise.ufl.edu/research/sparse/cholmod/metis.patch (for METIS 5)
@@ -82,7 +82,6 @@ Statyczna biblioteka CHOLMOD.
 %{__make} \
 	CC="%{__cc}" \
 	%{?with_metis:WITH_METIS=1} \
-	%{!?with_metis:PARTITION= LPARTITION=} \
 	CFLAGS="%{rpmcflags}" \
 	LDFLAGS="%{rpmldflags}" \
 	libdir=%{_libdir}
@@ -93,7 +92,6 @@ install -d $RPM_BUILD_ROOT%{_includedir}/cholmod
 
 %{__make} -C Lib install \
 	DESTDIR=$RPM_BUILD_ROOT \
-	%{!?with_metis:PARTITION= LPARTITION=} \
 	libdir=%{_libdir}
 
 install Include/*.h $RPM_BUILD_ROOT%{_includedir}/cholmod

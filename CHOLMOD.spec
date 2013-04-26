@@ -20,7 +20,7 @@ BuildRequires:	AMD-devel >= 2.3.0
 BuildRequires:	CAMD-devel >= 2.3.0
 BuildRequires:	CCOLAMD-devel >= 2.8.0
 BuildRequires:	COLAMD-devel >= 2.8.0
-BuildRequires:	SuiteSparse_config-devel >= 4.1.0
+BuildRequires:	SuiteSparse_config-devel >= 4.2.0
 BuildRequires:	blas-devel
 BuildRequires:	gcc-fortran
 BuildRequires:	lapack-devel
@@ -32,7 +32,7 @@ Requires:	AMD >= 2.3.0
 Requires:	CAMD >= 2.3.0
 Requires:	CCOLAMD >= 2.8.0
 Requires:	COLAMD >= 2.8.0
-Requires:	SuiteSparse_config-libs >= 4.1.0
+Requires:	SuiteSparse_config-libs >= 4.2.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -52,7 +52,7 @@ Requires:	AMD-devel >= 2.3.0
 Requires:	CAMD-devel >= 2.3.0
 Requires:	CCOLAMD-devel >= 2.8.0
 Requires:	COLAMD-devel >= 2.8.0
-Requires:	SuiteSparse_config-devel >= 4.0.0
+Requires:	SuiteSparse_config-devel >= 4.2.0
 
 %description devel
 Header files for CHOLMOD library.
@@ -81,6 +81,7 @@ Statyczna biblioteka CHOLMOD.
 %build
 %{__make} \
 	CC="%{__cc}" \
+	%{!?with_metis:CHOLMOD_CONFIG=-DNPARTITION} \
 	%{?with_metis:WITH_METIS=1} \
 	CFLAGS="%{rpmcflags}" \
 	LDFLAGS="%{rpmldflags}" \

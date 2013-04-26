@@ -44,7 +44,7 @@
  
 -LIB2 = ../Lib/libcholmod.a ../../AMD/Lib/libamd.a ../../COLAMD/Lib/libcolamd.a \
 -        ../../SuiteSparse_config/libsuitesparseconfig.a \
-+LIB2 = ../Lib/libcholmod.la -lamd -lcolamd \
++LIB2 = ../Lib/libcholmod.la -lsuitesparseconfig -lamd -lcolamd \
  	$(LIB_WITH_PARTITION) $(LAPACK) $(BLAS) $(XERBLA) $(LIB)
  
  #-------------------------------------------------------------------------------

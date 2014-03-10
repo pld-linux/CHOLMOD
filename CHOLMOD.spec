@@ -5,12 +5,12 @@
 Summary:	CHOLMOD: sparse supernodal Cholesky factorization and update/downdate
 Summary(pl.UTF-8):	CHOLMOD - rzadki wielowęzłowy rozkład Cholesky'ego z poprawianiem
 Name:		CHOLMOD
-Version:	2.1.1
+Version:	2.1.2
 Release:	1
 License:	GPL v2+ (some parts LGPL v2.1+)
 Group:		Libraries
 Source0:	http://www.cise.ufl.edu/research/sparse/cholmod/%{name}-%{version}.tar.gz
-# Source0-md5:	3b9a68ebc60825a6f3cd5f5fa5930de8
+# Source0-md5:	0c55ade78bb1b1f1e7b6a6cba024f70d
 Patch0:		%{name}-ufconfig.patch
 Patch1:		%{name}-shared.patch
 # http://www.cise.ufl.edu/research/sparse/cholmod/metis.patch (for METIS 5)

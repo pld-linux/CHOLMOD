@@ -5,22 +5,22 @@
 Summary:	CHOLMOD: sparse supernodal Cholesky factorization and update/downdate
 Summary(pl.UTF-8):	CHOLMOD - rzadki wielowęzłowy rozkład Cholesky'ego z poprawianiem
 Name:		CHOLMOD
-Version:	2.1.2
+Version:	3.0.1
 Release:	1
 License:	GPL v2+ (some parts LGPL v2.1+)
 Group:		Libraries
 Source0:	http://www.cise.ufl.edu/research/sparse/cholmod/%{name}-%{version}.tar.gz
-# Source0-md5:	0c55ade78bb1b1f1e7b6a6cba024f70d
+# Source0-md5:	677c2fac5bf480c125801ced2f51f9fe
 Patch0:		%{name}-ufconfig.patch
 Patch1:		%{name}-shared.patch
 # http://www.cise.ufl.edu/research/sparse/cholmod/metis.patch (for METIS 5)
 Patch2:		%{name}-metis.patch
 URL:		http://www.cise.ufl.edu/research/sparse/cholmod/
-BuildRequires:	AMD-devel >= 2.3.0
-BuildRequires:	CAMD-devel >= 2.3.0
-BuildRequires:	CCOLAMD-devel >= 2.8.0
-BuildRequires:	COLAMD-devel >= 2.8.0
-BuildRequires:	SuiteSparse_config-devel >= 4.2.0
+BuildRequires:	AMD-devel >= 2.4.0
+BuildRequires:	CAMD-devel >= 2.4.0
+BuildRequires:	CCOLAMD-devel >= 2.9.0
+BuildRequires:	COLAMD-devel >= 2.9.0
+BuildRequires:	SuiteSparse_config-devel >= 4.3.0
 BuildRequires:	blas-devel
 BuildRequires:	gcc-fortran
 BuildRequires:	lapack-devel
@@ -28,11 +28,11 @@ BuildRequires:	libtool >= 2:1.5
 %if %{with metis}
 BuildRequires:	metis-devel >= 5
 %endif
-Requires:	AMD >= 2.3.0
-Requires:	CAMD >= 2.3.0
-Requires:	CCOLAMD >= 2.8.0
-Requires:	COLAMD >= 2.8.0
-Requires:	SuiteSparse_config-libs >= 4.2.0
+Requires:	AMD >= 2.4.0
+Requires:	CAMD >= 2.4.0
+Requires:	CCOLAMD >= 2.9.0
+Requires:	COLAMD >= 2.9.0
+Requires:	SuiteSparse_config-libs >= 4.3.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -48,11 +48,11 @@ Summary:	Header files for CHOLMOD library
 Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki CHOLMOD
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
-Requires:	AMD-devel >= 2.3.0
-Requires:	CAMD-devel >= 2.3.0
-Requires:	CCOLAMD-devel >= 2.8.0
-Requires:	COLAMD-devel >= 2.8.0
-Requires:	SuiteSparse_config-devel >= 4.2.0
+Requires:	AMD-devel >= 2.4.0
+Requires:	CAMD-devel >= 2.4.0
+Requires:	CCOLAMD-devel >= 2.9.0
+Requires:	COLAMD-devel >= 2.9.0
+Requires:	SuiteSparse_config-devel >= 4.3.0
 
 %description devel
 Header files for CHOLMOD library.

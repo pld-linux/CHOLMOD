@@ -94,8 +94,8 @@
  reade: reade.f
 -	$(F77) $(FFLAGS) -O -o reade reade.f
 +	$(F77) $(LDFLAGS) -O $(FFLAGS) -o reade reade.f
---- CHOLMOD/Lib/Makefile.orig	2013-04-20 07:45:02.304428018 +0200
-+++ CHOLMOD/Lib/Makefile	2013-04-20 07:48:37.427752323 +0200
+--- CHOLMOD/Lib/Makefile.orig	2014-10-02 21:02:42.319207445 +0200
++++ CHOLMOD/Lib/Makefile	2014-10-02 21:06:16.905865107 +0200
 @@ -43,14 +43,14 @@
  
  C = $(CC) $(CF) $(CHOLMOD_CONFIG) $(CONFIG)
@@ -114,7 +114,7 @@
  
  clean:
  	- $(RM) $(CLEAN)
-@@ -144,9 +144,13 @@
+@@ -149,9 +149,13 @@
  # to compile just the double/int version, use OBJ = $(DI)
  OBJ = $(DI) $(DL)
  
@@ -131,7 +131,7 @@
  
  $(OBJ): $(INC)
  
-@@ -155,24 +159,24 @@
+@@ -160,24 +164,24 @@
  #-------------------------------------------------------------------------------
  
  cholmod_check.o: ../Check/cholmod_check.c
@@ -162,7 +162,7 @@
  
  
  #-------------------------------------------------------------------------------
-@@ -180,98 +184,98 @@
+@@ -185,98 +189,98 @@
  #-------------------------------------------------------------------------------
  
  cholmod_common.o: ../Core/cholmod_common.c
@@ -291,7 +291,7 @@
  
  
  #-------------------------------------------------------------------------------
-@@ -279,116 +283,116 @@
+@@ -284,116 +288,116 @@
  #-------------------------------------------------------------------------------
  
  cholmod_amd.o: ../Cholesky/cholmod_amd.c
@@ -442,7 +442,7 @@
  
  
  #-------------------------------------------------------------------------------
-@@ -396,88 +400,88 @@
+@@ -401,88 +405,88 @@
  #-------------------------------------------------------------------------------
  
  cholmod_horzcat.o: ../MatrixOps/cholmod_horzcat.c
@@ -555,34 +555,53 @@
  
  
  #-------------------------------------------------------------------------------
-@@ -487,24 +491,24 @@
+@@ -492,27 +496,27 @@
  cholmod_super_numeric.o: ../Supernodal/cholmod_super_numeric.c \
-         ../Supernodal/t_cholmod_gpu.c \
+         ../GPU/t_cholmod_gpu.c \
  	../Supernodal/t_cholmod_super_numeric.c
 -	$(C) -c $(I) $<
-+	libtool --tag=CC --mode=compile $(C) $(I) -c $<
++	libtool --tag=CC --mode=compile $(C) -c $(I) $<
  
  cholmod_super_symbolic.o: ../Supernodal/cholmod_super_symbolic.c
 -	$(C) -c $(I) $<
-+	libtool --tag=CC --mode=compile $(C) $(I) -c $<
++	libtool --tag=CC --mode=compile $(C) -c $(I) $<
  
  cholmod_super_solve.o: ../Supernodal/cholmod_super_solve.c \
  	../Supernodal/t_cholmod_super_solve.c
 -	$(C) -c $(I) $<
-+	libtool --tag=CC --mode=compile $(C) $(I) -c $<
++	libtool --tag=CC --mode=compile $(C) -c $(I) $<
  
  #-------------------------------------------------------------------------------
  
  cholmod_l_super_numeric.o: ../Supernodal/cholmod_super_numeric.c \
  	../Supernodal/t_cholmod_super_numeric.c
 -	$(C) -DDLONG -c $(I) $< -o $@
-+	libtool --tag=CC --mode=compile $(C) -DDLONG $(I) -c $< -o $@
++	libtool --tag=CC --mode=compile $(C) -DDLONG -c $(I) $< -o $@
  
  cholmod_l_super_symbolic.o: ../Supernodal/cholmod_super_symbolic.c
 -	$(C) -DDLONG -c $(I) $< -o $@
-+	libtool --tag=CC --mode=compile $(C) -DDLONG $(I) -c $< -o $@
++	libtool --tag=CC --mode=compile $(C) -DDLONG -c $(I) $< -o $@
  
  cholmod_l_super_solve.o: ../Supernodal/cholmod_super_solve.c \
  	../Supernodal/t_cholmod_super_solve.c
 -	$(C) -DDLONG -c $(I) $< -o $@
-+	libtool --tag=CC --mode=compile $(C) -DDLONG $(I) -c $< -o $@
++	libtool --tag=CC --mode=compile $(C) -DDLONG -c $(I) $< -o $@
+ 
+ #-------------------------------------------------------------------------------
+ # GPU module
+@@ -525,12 +529,12 @@
+ 
+ cholmod_gpu_kernels.o: ../GPU/cholmod_gpu_kernels.c \
+         ../GPU/cholmod_gpu_kernels.cu
+-	$(C) -c $(I) $<
++	libtool --tag=CC --mode=compile $(C) -c $(I) $<
+ 	$(NVCC) -I../../SuiteSparse_config -Xcompiler -fPIC -O3  -gencode=arch=compute_20,code=sm_20 -gencode=arch=compute_30,code=sm_30 -gencode=arch=compute_35,code=sm_35 -c ../GPU/cholmod_gpu_kernels.cu
+ 
+ cholmod_gpu.o: ../GPU/cholmod_gpu.c 
+-	$(C) -c $(I) $<
++	libtool --tag=CC --mode=compile $(C) -c $(I) $<
+ 
+ cholmod_l_gpu.o: ../GPU/cholmod_gpu.c 
+-	$(C) -DDLONG -c $(I) $< -o $@
++	libtool --tag=CC --mode=compile $(C) -DDLONG -c $(I) $< -o $@
+ 

@@ -53,6 +53,8 @@ Requires:	CAMD-devel >= 2.4.0
 Requires:	CCOLAMD-devel >= 2.9.0
 Requires:	COLAMD-devel >= 2.9.0
 Requires:	SuiteSparse_config-devel >= 4.3.0
+Requires:	blas-devel
+Requires:	lapack-devel
 
 %description devel
 Header files for CHOLMOD library.
